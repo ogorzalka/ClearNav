@@ -21,6 +21,30 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
+    font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#wrapper {
+    position: relative;
+    h1 {
+        font-size: 1.5em;
+        position: absolute;
+        top: 5em;
+        left: 50%;
+        margin:0 0 0 (-13em - 2 * 0.3em) / 2;
+        width: 13em;
+        padding: 4em 0;
+        color: #fff;
+        text-align: center;
+        border: 0.3em solid #fff;
+        @include border-radius(100%);
+        @include box-shadow(0 0 1em rgba(0,0,0,0.5));
+        text-shadow: 0 0 0.3em rgba(0,0,0,0.5);
+        strong {
+            font-size: 2.5em;
+            display: block;
+        }
+    }
 }
 
 [class^="icon-"]:before,
@@ -47,7 +71,6 @@ body {
 
 #access {
     @include clearfix;
-    font-family: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.5em;
     @include box-shadow(0 0 10px rgba(0,0,0,0.5));
     a, #menu a {
@@ -58,7 +81,6 @@ body {
         }
         
         &.skip-link {
-            @include clearfix;
             position: relative;
             z-index: 2;
             
@@ -86,11 +108,14 @@ body {
 }
 
 #menu {
+    @include transform-style(preserve-3d);
+    @include transition(margin 500ms linear);
     border: 0 none;
     margin: 0;
     padding: 0;
     
     li {
+        @include transform-style(preserve-3d);
         list-style-image: none;
         list-style-type: none;
         padding: 0;
@@ -98,6 +123,7 @@ body {
         @include transition(max-height 500ms linear);
         
         a {
+            @include transform-origin(top);
             @include ellipsis;
             @extend %menu-link;
             &:hover {
@@ -109,20 +135,16 @@ body {
 
 @include tablet-portrait-and-below {
     #menu {
-        @include transform-style(preserve-3d);
-        @include transition(margin 500ms linear);
         margin-top: -1.2em;
         overflow: hidden;
         
         li {
             max-height: 0;
             position: relative;
-            @include transform-style(preserve-3d);
-            @include perspective(1000px);
+            @include perspective(25em);
             
             a {
-                @include transform-origin(top);
-                @include transform(rotateX(-90deg) scale(0.97));
+                @include transform(rotateX(-90deg) scaleZ(0.97));
                 position: relative;
                 overflow: hidden;
                 background-color: darken($green, 15%);
@@ -131,7 +153,7 @@ body {
             &:nth-child(odd) {
                 a {
                     @include box-shadow(inset 0 0 4em rgba(0, 0, 0, 0.5));
-                    @include transform(rotateX(90deg) scale(0.97));
+                    @include transform(rotateX(90deg) scaleZ(0.97));
                 }
             }
             
@@ -160,10 +182,9 @@ body {
             
             li {
                 max-height: 1.5em + $padding-menu * 2;
-                height: auto;
                 a {
                     @include box-shadow(inset 0 0 0 rgba(0, 0, 0, 0));
-                    @include transform(rotateX(0) scale(1));
+                    @include transform(rotateX(0) scaleZ(1));
                 }
             }
         }
@@ -184,13 +205,10 @@ body {
     }
 
     #menu {
-        width: 100%;
         background: $green;
         text-align: center;
         li {
             @include inline-block;
-            white-space: nowrap;
-            
             a {
                 &:before {
                     @include transition(transform 500ms ease-in);
